@@ -1,0 +1,890 @@
+body {
+    font-family: 'Poppins', sans-serif;
+    margin: 0;
+    background-color: var(--background-color);
+    color: var(--text-color);
+    line-height: 1.6;
+    padding-bottom: 70px; /* Espaço para o footer-nav */
+}
+
+/* Novas variáveis de cores com mais marrom */
+:root {
+    --primary-color: #CC0000; /* Vermelho vibrante para ações principais */
+    --secondary-color: #FFD700; /* Amarelo dourado para destaque secundário/sucesso */
+    --background-color: #FFFFFF; /* Fundo branco */
+    --card-background: #FFFFFF; /* Fundo do card branco */
+    --text-color: #5A3F3B; /* Marrom escuro mais intenso para textos principais */
+    --light-text-color: #8B735C; /* Marrom médio para textos secundários */
+    --border-color: #A68E7E; /* Marrom claro/acinzentado para bordas */
+    --shadow-color: rgba(90, 63, 59, 0.15); /* Sombra mais visível com tom marrom */
+    --hover-dark-color: #4A332F; /* Marrom ainda mais escuro para hover de texto/ícone */
+    --brown-button-bg: #8B735C; /* Cor de fundo para os botões de quantidade (marrom) */
+    --brown-button-hover-bg: #5A3F3B; /* Cor de hover para os botões de quantidade (marrom mais escuro) */
+}
+
+/* Header */
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 20px;
+    background-color: var(--card-background);
+    border-bottom: 1px solid var(--border-color);
+    box-shadow: 0 2px 4px var(--shadow-color);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+.logo {
+    font-size: 1.8em;
+    font-weight: 700;
+    color: var(--primary-color);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.search-bar {
+    position: relative;
+    flex-grow: 1;
+    margin: 0 20px;
+    max-width: 500px;
+}
+
+.search-bar input {
+    width: 100%;
+    padding: 10px 15px;
+    padding-right: 40px; /* Espaço para o ícone */
+    border: 1px solid var(--border-color);
+    border-radius: 25px;
+    font-size: 1em;
+    color: var(--text-color);
+    transition: all 0.3s ease;
+}
+
+.search-bar input::placeholder {
+    color: var(--light-text-color);
+}
+
+.search-bar input:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 5px rgba(204, 0, 0, 0.3); /* Sombra do foco com a cor primária */
+}
+
+.search-icon {
+    position: absolute;
+    right: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--light-text-color);
+    cursor: pointer;
+}
+
+.nav-icons {
+    display: flex;
+    gap: 15px;
+}
+
+.icon-btn {
+    background: none;
+    border: none;
+    font-size: 1.4em;
+    color: var(--text-color);
+    cursor: pointer;
+    position: relative;
+    padding: 5px;
+    transition: color 0.2s ease;
+    text-decoration: none; /* Para os links */
+}
+
+.icon-btn:hover {
+    color: var(--primary-color);
+}
+
+.badge {
+    position: absolute;
+    top: -5px;
+    right: -5px;
+    background-color: var(--secondary-color); /* Amarelo para o badge */
+    color: var(--text-color); /* Texto do badge em marrom escuro */
+    font-size: 0.7em;
+    font-weight: 600;
+    border-radius: 50%;
+    padding: 3px 6px;
+    min-width: 15px;
+    text-align: center;
+}
+
+/* Main Container */
+.container {
+    max-width: 1200px;
+    margin: 20px auto;
+    padding: 0 20px;
+}
+
+/* Category Carousel */
+.category-carousel {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    background-color: var(--card-background);
+    padding: 15px 0;
+    border-radius: 10px;
+    box-shadow: 0 2px 5px var(--shadow-color);
+    margin-bottom: 30px;
+    overflow-x: auto; /* Permite rolagem em telas menores */
+    -webkit-overflow-scrolling: touch; /* Suaviza a rolagem em iOS */
+    scroll-snap-type: x mandatory;
+}
+
+.category-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-decoration: none;
+    color: var(--text-color);
+    font-size: 0.9em;
+    font-weight: 600;
+    transition: transform 0.2s ease, color 0.2s ease;
+    padding: 0 10px; /* Espaçamento entre os itens */
+    flex-shrink: 0; /* Impede que os itens encolham */
+    scroll-snap-align: start;
+}
+
+.category-item:hover {
+    transform: translateY(-3px);
+    color: var(--primary-color);
+}
+
+.category-item img {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-bottom: 8px;
+    border: 2px solid var(--border-color);
+    transition: border-color 0.2s ease;
+}
+
+.category-item:hover img {
+    border-color: var(--primary-color);
+}
+
+/* Product Grid (agora usado dentro de cada seção de categoria) */
+.product-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 25px;
+    margin-top: 20px; /* Espaçamento entre o título/hr e os produtos */
+}
+
+/* Product Card */
+.product-card {
+    background-color: var(--card-background);
+    border-radius: 12px;
+    box-shadow: 0 4px 10px var(--shadow-color);
+    padding: 15px;
+    text-align: center;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.product-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 15px var(--shadow-color); /* Sombra mais intensa no hover */
+}
+
+.product-card img {
+    max-width: 100%;
+    height: 150px; /* Altura fixa para consistência */
+    object-fit: cover;
+    border-radius: 8px;
+    margin-bottom: 10px;
+}
+
+.product-info h3 {
+    font-size: 1.1em;
+    margin: 10px 0 5px;
+    color: var(--text-color);
+}
+
+.product-info p {
+    font-size: 0.85em;
+    color: var(--light-text-color);
+    margin-bottom: 10px;
+    min-height: 35px; /* Para manter o layout consistente mesmo sem descrição longa */
+}
+
+.product-card .price {
+    font-size: 1.3em;
+    font-weight: 700;
+    color: var(--primary-color);
+    display: block; /* Garante que o preço fique em uma nova linha */
+    margin-bottom: 15px;
+}
+
+.add-to-cart-btn {
+    background-color: var(--primary-color);
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 20px;
+    cursor: pointer;
+    font-size: 1em;
+    font-weight: 600;
+    transition: background-color 0.2s ease, transform 0.2s ease;
+    width: 100%; /* Ocupa a largura total do card */
+}
+
+.add-to-cart-btn:hover {
+    background-color: #A00000; /* Tom mais escuro do vermelho ao hover */
+    transform: translateY(-2px);
+}
+
+.favorite-btn {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: none;
+    border: none;
+    font-size: 1.3em;
+    color: var(--light-text-color);
+    cursor: pointer;
+    transition: color 0.2s ease;
+}
+
+.favorite-btn:hover {
+    color: var(--primary-color);
+}
+
+.favorite-btn .fas.fa-heart {
+    color: var(--primary-color); /* Cor para coração preenchido */
+}
+
+/* Footer Navigation */
+.footer-nav {
+    display: flex;
+    justify-content: space-around;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background-color: var(--card-background);
+    border-top: 1px solid var(--border-color);
+    box-shadow: 0 -2px 5px var(--shadow-color);
+    padding: 10px 0;
+    z-index: 1000;
+}
+.logo {
+    height: 40px;
+    width: auto;
+}
+.footer-nav .nav-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-decoration: none;
+    color: var(--light-text-color);
+    font-size: 0.8em;
+    transition: color 0.2s ease;
+}
+
+.footer-nav .nav-item i {
+    font-size: 1.5em;
+    margin-bottom: 3px;
+}
+
+.footer-nav .nav-item:hover {
+    color: var(--primary-color);
+}
+
+.footer-nav .nav-item.active {
+    color: var(--primary-color);
+    font-weight: 600;
+}
+
+/* Estilos específicos para a página do carrinho */
+.cart-page {
+    padding-top: 20px;
+}
+
+.section-title {
+    font-size: 2em;
+    color: var(--primary-color);
+    text-align: center;
+    margin-bottom: 30px;
+    font-weight: 700;
+}
+
+.cart-items {
+    background-color: var(--card-background);
+    border-radius: 10px;
+    box-shadow: 0 4px 10px var(--shadow-color);
+    padding: 20px;
+    margin-bottom: 30px;
+}
+
+.cart-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 15px 0;
+    border-bottom: 1px solid var(--border-color);
+    flex-wrap: wrap; /* Permite que os itens quebrem linha em telas menores */
+}
+
+.cart-item:last-child {
+    border-bottom: none;
+}
+
+.cart-item img {
+    width: 80px;
+    height: 80px;
+    object-fit: cover;
+    border-radius: 8px;
+    margin-right: 15px;
+    flex-shrink: 0; /* Garante que a imagem não encolha */
+}
+
+.cart-item .item-info {
+    flex-grow: 1;
+    min-width: 150px; /* Garante que a informação do item tenha um mínimo de largura */
+}
+
+.cart-item h3 {
+    font-size: 1.1em;
+    margin: 0 0 5px;
+    color: var(--text-color);
+}
+
+.cart-item .item-price {
+    font-size: 1em;
+    font-weight: 600;
+    color: var(--primary-color);
+}
+
+/* Estilos para os controles de quantidade */
+.quantity-controls {
+    display: flex;
+    align-items: center;
+    border: 1px solid var(--border-color);
+    border-radius: 20px;
+    overflow: hidden; /* Garante que os cantos arredondados sejam aplicados */
+    margin-right: 15px; /* Adiciona margem à direita para afastar do botão Remover */
+    flex-shrink: 0; /* Impede que os controles encolham */
+}
+
+.quantity-btn {
+    background-color: var(--primary-color); /* Vermelho para os botões de quantidade */
+    color: white;
+    border: none;
+    padding: 4px 8px; /* Reduzido para ficar 70% do tamanho do remover */
+    font-size: 1em; /* Levemente menor */
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+    width: 25px; /* Largura reduzida */
+    height: 25px; /* Altura reduzida */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.quantity-btn:hover {
+    background-color: #A00000; /* Vermelho mais escuro no hover */
+}
+
+.quantity-display {
+    padding: 0 8px; /* Ajuste para o novo tamanho do botão */
+    font-size: 0.9em; /* Ajuste para o novo tamanho do botão */
+    font-weight: 600;
+    color: var(--text-color);
+    min-width: 20px; /* Ajuste para o novo tamanho do botão */
+    text-align: center;
+}
+
+.remove-from-cart-btn {
+    background-color: #CC0000; /* Vermelho para remover */
+    color: white;
+    border: none;
+    padding: 8px 15px;
+    border-radius: 15px;
+    cursor: pointer;
+    font-size: 0.9em;
+    transition: background-color 0.2s ease;
+    margin-left: 15px; /* Aumenta a margem à esquerda para criar distância */
+    margin-top: 0;
+    flex-shrink: 0;
+    white-space: nowrap;
+    height: 35px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.remove-from-cart-btn:hover {
+    background-color: #A00000;
+}
+
+/* Ajustes para o layout do item do carrinho com os novos controles */
+.cart-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between; /* Espaço entre info, quantidade e remover */
+    padding: 15px 0;
+    border-bottom: 1px solid var(--border-color);
+    flex-wrap: nowrap; /* Tenta manter em uma linha por padrão */
+}
+
+.cart-item > img {
+    margin-right: 15px;
+}
+
+.cart-item .item-info {
+    flex-grow: 1;
+    /* margin-right: 15px; <-- Removido para simplificar, pois a margem agora está nos elementos vizinhos */
+}
+
+/* Quebra de linha para mobile */
+@media (max-width: 480px) {
+    .cart-item {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    .cart-item img {
+        margin-bottom: 10px;
+        margin-right: 0;
+    }
+    .cart-item .item-info {
+        width: 100%;
+        margin-right: 0;
+    }
+    .quantity-controls {
+        margin-left: 0; /* Reseta a margem esquerda para mobile */
+        margin-right: 0; /* Reseta a margem direita para mobile */
+        margin-top: 10px;
+        justify-content: center; /* Centraliza os botões de quantidade no mobile */
+        width: 100%;
+    }
+    .remove-from-cart-btn {
+        margin-top: 15px;
+        margin-left: 0; /* Reseta a margem esquerda para mobile */
+        width: 100%; /* No mobile, ele volta a ocupar a largura total para melhor toque */
+        height: auto; /* Deixa a altura automática para acomodar o padding e texto */
+    }
+}
+
+
+.cart-summary {
+    background-color: var(--card-background);
+    border-radius: 10px;
+    box-shadow: 0 4px 10px var(--shadow-color);
+    padding: 20px;
+    margin-top: 20px;
+}
+
+.summary-item {
+    display: flex;
+    justify-content: space-between;
+    padding: 8px 0;
+    font-size: 1.1em;
+    color: var(--text-color);
+}
+
+.summary-item.total {
+    font-size: 1.4em;
+    font-weight: 700;
+    color: var(--primary-color);
+    border-top: 1px solid var(--border-color);
+    padding-top: 15px;
+    margin-top: 10px;
+}
+
+.checkout-btn {
+    background-color: var(--secondary-color); /* Amarelo para finalizar pedido */
+    color: var(--text-color); /* Texto do botão em marrom escuro */
+    border: none;
+    padding: 15px 25px;
+    border-radius: 25px;
+    cursor: pointer;
+    font-size: 1.2em;
+    font-weight: 600;
+    width: 100%;
+    margin-top: 20px;
+    transition: background-color 0.2s ease, transform 0.2s ease;
+}
+
+.checkout-btn:hover {
+    background-color: #E0B000; /* Tom mais escuro do amarelo */
+    transform: translateY(-2px);
+}
+
+
+/* Estilos para admin_login.html */
+.admin-login-page {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: calc(100vh - 70px); /* Ajusta para considerar o footer-nav */
+    background-color: var(--background-color);
+    padding: 20px; /* Padding para evitar que o card toque as bordas */
+    box-sizing: border-box; /* Inclui padding na largura/altura */
+}
+
+.login-card {
+    background-color: var(--card-background);
+    padding: 40px;
+    border-radius: 15px;
+    box-shadow: 0 8px 20px var(--shadow-color);
+    width: 100%;
+    max-width: 400px;
+    text-align: center;
+}
+
+.login-card h2 {
+    color: var(--primary-color);
+    margin-bottom: 30px;
+    font-size: 2em;
+    font-weight: 700;
+}
+
+.form-group {
+    margin-bottom: 20px;
+    text-align: left;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 600;
+    color: var(--text-color);
+}
+
+.form-group input {
+    width: calc(100% - 20px); /* Subtrai o padding */
+    padding: 12px 10px;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    font-size: 1em;
+    transition: border-color 0.2s ease;
+}
+
+.form-group input:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 5px rgba(204, 0, 0, 0.3);
+}
+
+.login-btn {
+    background-color: var(--primary-color);
+    color: white;
+    border: none;
+    padding: 15px 30px;
+    border-radius: 25px;
+    cursor: pointer;
+    font-size: 1.1em;
+    font-weight: 600;
+    margin-top: 20px;
+    width: 100%;
+    transition: background-color 0.2s ease, transform 0.2s ease;
+}
+
+.login-btn:hover {
+    background-color: #A00000;
+    transform: translateY(-2px);
+}
+
+/* Estilos para os títulos de categoria e divisores */
+.category-title {
+    font-size: 1.8em;
+    color: var(--primary-color); /* Título da categoria em vermelho */
+    margin-top: 40px;
+    margin-bottom: 15px;
+    text-align: left;
+    font-weight: 700;
+}
+
+.category-divider {
+    border: 0;
+    height: 1px;
+    background-image: linear-gradient(to right, rgba(0, 0, 0, 0), var(--border-color), rgba(0, 0, 0, 0));
+    margin-bottom: 30px;
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+    .header {
+        flex-wrap: wrap;
+        padding: 10px 15px;
+    }
+
+    .logo {
+        width: 100%;
+        text-align: center;
+        margin-bottom: 10px;
+    }
+
+    .search-bar {
+        order: 3; /* Coloca a barra de pesquisa abaixo dos ícones */
+        margin: 10px 0;
+        width: 100%;
+    }
+
+    .nav-icons {
+        width: 100%;
+        justify-content: center;
+    }
+
+    .container {
+        padding: 0 15px;
+    }
+
+    .category-carousel {
+        justify-content: flex-start; /* Permite rolagem mais natural */
+        padding: 10px;
+    }
+
+    .product-grid {
+        grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+        gap: 15px;
+    }
+
+    .product-card {
+        padding: 10px;
+    }
+
+    .product-card img {
+        height: 120px;
+    }
+
+    .product-info h3 {
+        font-size: 1em;
+    }
+
+    .product-info p {
+        font-size: 0.8em;
+        min-height: 30px;
+    }
+
+    .product-card .price {
+        font-size: 1.1em;
+    }
+
+    .add-to-cart-btn {
+        padding: 8px 15px;
+        font-size: 0.9em;
+    }
+
+    .footer-nav .nav-item {
+        font-size: 0.75em;
+    }
+
+    .footer-nav .nav-item i {
+        font-size: 1.3em;
+    }
+
+    .cart-item img {
+        width: 60px;
+        height: 60px;
+    }
+
+    .cart-item h3 {
+        font-size: 1em;
+    }
+
+    .cart-item .item-price {
+        font-size: 0.9em;
+    }
+
+    /* .remove-from-cart-btn já tem ajustes para mobile */
+
+    .summary-item {
+        font-size: 1em;
+    }
+
+    .summary-item.total {
+        font-size: 1.2em;
+    }
+
+    .checkout-btn {
+        padding: 12px 20px;
+        font-size: 1em;
+    }
+
+    .login-card {
+        padding: 25px;
+    }
+
+    .login-card h2 {
+        font-size: 1.8em;
+    }
+}
+/* Seu CSS existente... */
+
+/* --- Novas Regras CSS para Imagens de Fundo por Item --- */
+/* Adicione estas regras ao final do seu arquivo style.css */
+
+/* Estilos de base para as imagens de fundo dos cards */
+.product-card {
+    position: relative;
+    overflow: hidden;
+}
+
+.product-card::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    z-index: 0;
+    opacity: 0.2; /* Ajuste este valor (0.0 a 1.0) conforme desejar. */
+    filter: blur(2px); /* Ajuste este valor. */
+    transition: opacity 0.3s ease, filter 0.3s ease;
+}
+
+/* Opcional: Efeito de hover na imagem de fundo */
+.product-card:hover::before {
+    opacity: 0.3;
+    filter: blur(1px);
+}
+
+
+/* Garante que o conteúdo do card esteja acima da imagem de fundo */
+.product-card img,
+.product-card .product-info,
+.product-card .add-to-cart-btn,
+.product-card .favorite-btn {
+    position: relative;
+    z-index: 1;
+}
+
+
+/* Regras individuais para cada produto - COM CAMINHOS E EXTENSÕES ATUALIZADOS */
+
+/* Cervejas */
+.product-card.product-id-1::before {
+    background-image: url('tst - 1/img/i1.jpeg'); /* AGORA TUDO .JPEG */
+}
+
+.product-card.product-id-7::before {
+    background-image: url('tst - 1/img/i7.jpeg');
+}
+
+.product-card.product-id-13::before {
+    background-image: url('tst - 1/img/i13.jpeg');
+}
+
+.product-card.product-id-17::before {
+    background-image: url('tst - 1/img/i17.jpeg');
+}
+
+/* Refrigerantes */
+.product-card.product-id-2::before {
+    background-image: url('tst - 1/img/i2.jpeg');
+}
+
+.product-card.product-id-8::before {
+    background-image: url('tst - 1/img/i8.jpeg');
+}
+
+.product-card.product-id-18::before {
+    background-image: url('tst - 1/img/i18.jpeg');
+}
+
+.product-card.product-id-19::before {
+    background-image: url('tst - 1/img/i19.jpeg');
+}
+
+/* Sucos */
+.product-card.product-id-3::before {
+    background-image: url('tst - 1/img/i3.jpeg');
+}
+
+.product-card.product-id-14::before {
+    background-image: url('tst - 1/img/i14.jpeg');
+}
+
+.product-card.product-id-20::before {
+    background-image: url('tst - 1/img/i20.jpeg');
+}
+
+.product-card.product-id-21::before {
+    background-image: url('tst - 1/img/i21.jpeg');
+}
+
+/* Vinhos */
+.product-card.product-id-4::before {
+    background-image: url('tst - 1/img/i4.jpeg');
+}
+
+.product-card.product-id-10::before {
+    background-image: url('tst - 1/img/i10.jpeg');
+}
+
+.product-card.product-id-22::before {
+    background-image: url('tst - 1/img/i22.jpeg');
+}
+
+.product-card.product-id-23::before {
+    background-image: url('tst - 1/img/i23.jpeg');
+}
+
+/* Destilados */
+.product-card.product-id-6::before {
+    background-image: url('tst - 1/img/i6.jpeg');
+}
+
+.product-card.product-id-11::before {
+    background-image: url('tst - 1/img/i11.jpeg');
+}
+
+.product-card.product-id-12::before {
+    background-image: url('tst - 1/img/i12.jpeg');
+}
+
+.product-card.product-id-15::before {
+    background-image: url('tst - 1/img/i15.jpeg');
+}
+
+/* Águas */
+.product-card.product-id-5::before {
+    background-image: url('tst - 1/img/i5.jpeg');
+}
+
+.product-card.product-id-9::before {
+    background-image: url('tst - 1/img/i9.jpeg');
+}
+
+.product-card.product-id-24::before {
+    background-image: url('tst - 1/img/i24.jpeg');
+}
+
+.product-card.product-id-25::before {
+    background-image: url('tst - 1/img/i25.jpeg');
+}
+
+/* Energéticos */
+.product-card.product-id-16::before {
+    background-image: url('tst - 1/img/i16.jpeg'); /* AGORA TUDO .JPEG */
+}
+
+.product-card.product-id-26::before {
+    background-image: url('tst - 1/img/i26.jpeg');
+}
+
+.product-card.product-id-27::before {
+    background-image: url('tst - 1/img/i27.jpeg');
+}
+
+.product-card.product-id-28::before {
+    background-image: url('tst - 1/img/i28.jpeg');
+}
+
+/* O restante do seu CSS continua aqui */

@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tomaê - Seus Favoritos</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="style.css"> 
+</head>
+<body>
+
+    <header class="header">
+        <img src="tomaê.png" alt="TomaeLogo" class="logo" style="height: 130px; width: auto;" />
+        <div class="search-bar">
+            <input type="text" placeholder="Buscar bebidas, marcas...">
+            <i class="fas fa-search search-icon"></i>
+        </div>
+        <div class="nav-icons">
+            <a href="favoritos.html" class="icon-btn"><i class="fas fa-heart"></i><span class="badge" id="favorites-badge">0</span></a>
+            <button class="icon-btn"><i class="fas fa-bell"></i></button>
+            <a href="carrinho.html" class="icon-btn"><i class="fas fa-shopping-cart"></i><span class="badge" id="cart-badge">0</span></a>
+        </div>
+    </header>
+
+    <div class="container favorites-page">
+        <h2 class="section-title">Meus Favoritos</h2>
+
+        <div class="product-grid" id="favorites-list">
+            
+            <p id="empty-favorites-message" style="text-align: center; color: var(--text-color);">Você ainda não tem produtos favoritos.</p>
+        </div>
+    </div>
+
+    <nav class="footer-nav">
+        <a href="index.html" class="nav-item">
+            <i class="fas fa-home"></i>
+            <span>Início</span>
+        </a>
+        <a href="carrinho.html" class="nav-item">
+            <i class="fas fa-shopping-cart"></i>
+            <span>Carrinho</span>
+        </a>
+        <a href="favoritos.html" class="nav-item active">
+            <i class="fas fa-heart"></i>
+            <span>Favoritos</span>
+        </a>
+        <a href="admin_login.html" class="nav-item">
+            <i class="fas fa-user"></i>
+            <span>Admin</span>
+        </a>
+    </nav>
+
+    <script src="script.js"></script> 
+</body>
+</html>
