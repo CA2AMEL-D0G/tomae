@@ -25,7 +25,10 @@ document.addEventListener('DOMContentLoaded', () => {
         console.log(`Produto "${product.name}" adicionado/quantidade atualizada no carrinho!`);
         renderCartItems(); // Recarrega o carrinho para refletir a nova quantidade
     };
-
+    const animateButton = (btn) => {
+    btn.classList.add('jump');
+    setTimeout(() => btn.classList.remove('jump'), 300); // Remove after animation finishes
+};
     const updateQuantity = (productId, change) => {
         let cart = JSON.parse(localStorage.getItem('cart')) || [];
         const productIndex = cart.findIndex(item => item.id == productId);
@@ -100,6 +103,26 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     };
 
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
     // --- Funções de Favoritos (Mantidas como estão, pois não parecem ter problema) ---
     const updateFavoritesBadge = () => {
         let favorites = JSON.parse(localStorage.getItem('favorites')) || [];
@@ -170,6 +193,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     const productName = productCard.dataset.name;
                     const productPrice = parseFloat(productCard.dataset.price);
                     const productImg = productCard.dataset.img;
+                    animateButton(button)
                     addToCart({ id: productId, name: productName, price: productPrice, img: productImg });
                 });
             });
@@ -186,6 +210,29 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         }
     };
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     // --- Lógica Principal e Delegação de Eventos ---
 

@@ -17,11 +17,23 @@
             <i class="fas fa-search search-icon"></i>
         </div>
         <div class="nav-icons">
-            <a href="favoritos.html" class="icon-btn"><i class="fas fa-heart"></i><span class="badge" id="favorites-badge">0</span></a>
+            <a href="favoritos.php" class="icon-btn"><i class="fas fa-heart"></i><span class="badge" id="favorites-badge">0</span></a>
             <button class="icon-btn"><i class="fas fa-bell"></i></button>
-            <a href="carrinho.html" class="icon-btn"><i class="fas fa-shopping-cart"></i><span class="badge" id="cart-badge">0</span></a>
+            <a href="carrinho.php" class="icon-btn"><i class="fas fa-shopping-cart"></i><span class="badge" id="cart-badge">0</span></a>
         </div>
     </header>
+
+
+
+
+
+
+
+
+
+
+
+
 
     <div class="container cart-page">
         <h2 class="section-title">Seu Carrinho</h2>
@@ -48,24 +60,26 @@
     </div>
 
     <nav class="footer-nav">
-        <a href="index.html" class="nav-item">
+        <a href="index.php" class="nav-item">
             <i class="fas fa-home"></i>
             <span>Início</span>
         </a>
-        <a href="carrinho.html" class="nav-item active">
+        <a href="carrinho.php" class="nav-item active">
             <i class="fas fa-shopping-cart"></i>
             <span>Carrinho</span>
         </a>
-        <a href="favoritos.html" class="nav-item">
+        <a href="favoritos.php" class="nav-item">
             <i class="fas fa-heart"></i>
             <span>Favoritos</span>
         </a>
-        <a href="admin_login.html" class="nav-item">
+        <a href="admin_login.php" class="nav-item">
             <i class="fas fa-user"></i>
             <span>Admin</span>
         </a>
     </nav>
-
-    <script src="script.js"></script> 
+<script src="script.js"></script>
+     
 </body>
 </html>
+
+

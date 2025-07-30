@@ -8,6 +8,9 @@ body {
 }
 
 /* Novas variáveis de cores com mais marrom */
+
+
+
 :root {
     --primary-color: #CC0000; /* Vermelho vibrante para ações principais */
     --secondary-color: #FFD700; /* Amarelo dourado para destaque secundário/sucesso */
@@ -244,7 +247,10 @@ body {
     background-color: #A00000; /* Tom mais escuro do vermelho ao hover */
     transform: translateY(-2px);
 }
-
+.add-to-cart-btn:active {
+    animation: jump 0.3s ease;
+    background-color: var(--secondary-color);
+    }
 .favorite-btn {
     position: absolute;
     top: 10px;
@@ -676,8 +682,10 @@ body {
     .add-to-cart-btn {
         padding: 8px 15px;
         font-size: 0.9em;
-    }
+        animation: jump 0.3s ease;
 
+    }
+   
     .footer-nav .nav-item {
         font-size: 0.75em;
     }
@@ -888,3 +896,14 @@ body {
 }
 
 /* O restante do seu CSS continua aqui */
+
+@keyframes jump {
+    0%   { transform: scale(1); }
+    30%  { transform: scale(110) translateY(-5px); }
+    60%  { transform: scale(10) translateY(2px); }
+    100% { transform: scale(1); }
+}
+
+.jump {
+    animation: jump 0.3s ease;
+}

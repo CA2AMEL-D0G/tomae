@@ -1,3 +1,8 @@
+
+
+
+
+
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -28,19 +33,19 @@
     </div>
 
     <nav class="footer-nav">
-        <a href="index.html" class="nav-item">
+        <a href="index.php" class="nav-item">
             <i class="fas fa-home"></i>
             <span>Início</span>
         </a>
-        <a href="carrinho.html" class="nav-item">
+        <a href="carrinho.php" class="nav-item">
             <i class="fas fa-shopping-cart"></i>
             <span>Carrinho</span>
         </a>
-        <a href="favoritos.html" class="nav-item">
+        <a href="favoritos.php" class="nav-item">
             <i class="fas fa-heart"></i>
             <span>Favoritos</span>
         </a>
-        <a href="admin_login.html" class="nav-item active">
+        <a href="admin_login.php" class="nav-item active">
             <i class="fas fa-user"></i>
             <span>Admin</span>
         </a>
