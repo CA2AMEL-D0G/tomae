@@ -1,3 +1,9 @@
+<?php
+require_once("drink_list.php")
+
+
+?>
+
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -7,50 +13,232 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link rel="stylesheet" href="style.css"> 
+
+<style>
+    .favorite-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 20px;
+            width: 100%;
+            
+        }
+</style>
+
+
+
 </head>
+
+
 <body>
 
-    <header class="header">
-        <img src="tomaê.png" alt="TomaeLogo" class="logo" style="height: 130px; width: auto;" />
-        <div class="search-bar">
-            <input type="text" placeholder="Buscar bebidas, marcas...">
-            <i class="fas fa-search search-icon"></i>
-        </div>
-        <div class="nav-icons">
-            <a href="favoritos.php" class="icon-btn"><i class="fas fa-heart"></i><span class="badge" id="favorites-badge">0</span></a>
-            <button class="icon-btn"><i class="fas fa-bell"></i></button>
-            <a href="carrinho.php" class="icon-btn"><i class="fas fa-shopping-cart"></i><span class="badge" id="cart-badge">0</span></a>
-        </div>
-    </header>
+
+
+    <?php require_once("header.html")?>
 
     <div class="container favorites-page">
         <h2 class="section-title">Meus Favoritos</h2>
 
-        <div class="product-grid" id="favorites-list">
-            
+        <div class="favorite-grid" id="favorites-list">
+             
+        
+                    <?php foreach ($drinks as $drink): ?>
+                        <div class="product-card" 
+                             data-id="<?= $drink['id'] ?>"
+                             data-name="<?= htmlspecialchars($drink['name']) ?>"
+                             data-price="<?= $drink['price'] ?>"
+                             data-img="<?= htmlspecialchars($drink['img']) ?>">
+                             
+                            <button class="favorite-btn"><i class="far fa-heart"></i></button>
+                            <img src="<?= htmlspecialchars($drink['img']) ?>" alt="<?= htmlspecialchars($drink['name']) ?>">
+                            <div class="product-info">
+                                <h3><?= htmlspecialchars($drink['name']) ?></h3>
+                                
+                                <span class="price">R$ <?= number_format($drink['price'], 2, ',', '.') ?></span>
+                            </div>
+                            <button onclick="" class="add-to-cart-btn">Adicionar ao carrinho</button>
+                        </div>
+                    <?php endforeach; ?>
+        
+          
+
+
+
             <p id="empty-favorites-message" style="text-align: center; color: var(--text-color);">Você ainda não tem produtos favoritos.</p>
         </div>
     </div>
 
-    <nav class="footer-nav">
-        <a href="index.php" class="nav-item">
-            <i class="fas fa-home"></i>
-            <span>Início</span>
-        </a>
-        <a href="carrinho.php" class="nav-item">
-            <i class="fas fa-shopping-cart"></i>
-            <span>Carrinho</span>
-        </a>
-        <a href="favoritos.php" class="nav-item active">
-            <i class="fas fa-heart"></i>
-            <span>Favoritos</span>
-        </a>
-        <a href="admin_login.php" class="nav-item">
-            <i class="fas fa-user"></i>
-            <span>Admin</span>
-        </a>
-    </nav>
+   <?php require_once("footer.html")?>
 
     
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    
+function animateButton(btn) {
+    btn.classList.add('jump');
+    setTimeout(() => btn.classList.remove('jump'), 300); // Remove after animation finishes
+};
+
+    
+
+    const saveCart = (cart) => {
+    localStorage.setItem(CART_KEY, JSON.stringify(cart));
+        sendCartToServer(cart)
+   
+};
+
+   
+
+    const addToCart = (product) => {
+        const cart = getCart();
+        const existing = cart.find(item => item.id === product.id);
+        if (existing) {
+            existing.quantity += 1;
+        } else {
+            cart.push({ ...product, quantity: 1 });
+        }
+      
+        saveCart(cart);
+        updateCartBadge()
+        ;
+    };
+
+    // Hook up all store page "Add to Cart" buttons
+    document.querySelectorAll('.add-to-cart-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+            const card = btn.closest('.product-card');
+            const product = {
+                id: card.dataset.id,
+                name: card.dataset.name,
+                price: parseFloat(card.dataset.price),
+                
+            };
+            addToCart(product);
+            animateButton(btn)
+        });
+    });
+
+    
+
+
+     console.log("DOM fully loaded");
+
+    
+
+    const toggleFavorite = (productCard, productId, productName, productPrice, productImg) => {
+        let favorites = JSON.parse(localStorage.getItem('favorites')) || [];
+        const favoriteIcon = productCard.querySelector('.favorite-btn i');
+        const isFavorited = favorites.some(item => item.id == productId);
+
+        if (isFavorited) {
+            favorites = favorites.filter(item => item.id != productId);
+            favoriteIcon.classList.remove('fas');
+            favoriteIcon.classList.add('far');
+        } else {
+            favorites.push({ id: productId, name: productName, price: productPrice, img: productImg });
+            favoriteIcon.classList.remove('far');
+            favoriteIcon.classList.add('fas');
+        }
+
+        localStorage.setItem('favorites', JSON.stringify(favorites));
+        updateFavoritesBadge();
+    };
+
+    const markInitialFavorites = () => {
+        let favorites = JSON.parse(localStorage.getItem('favorites')) || [];
+        document.querySelectorAll('.product-card').forEach(productCard => {
+            const productId = productCard.dataset.id;
+            const favoriteIcon = productCard.querySelector('.favorite-btn i');
+            if (favorites.some(item => item.id == productId)) {
+                favoriteIcon.classList.remove('far');
+                favoriteIcon.classList.add('fas');
+            } else {
+                favoriteIcon.classList.remove('fas');
+                favoriteIcon.classList.add('far');
+            }
+        });
+    };
+
+    // ✅ Properly hook favorite buttons
+    document.querySelectorAll('.favorite-btn').forEach(button => {
+        button.addEventListener('click', (event) => {
+            console.log("Favorite button clicked");
+
+            const productCard = event.target.closest('.product-card');
+            const productId = productCard.dataset.id;
+            const productName = productCard.dataset.name;
+            const productPrice = parseFloat(productCard.dataset.price);
+            const productImg = productCard.dataset.img;
+            animateButton(button)
+            toggleFavorite(productCard, productId, productName, productPrice, productImg);
+        });
+    });
+
+    // Initial favorite state
+    markInitialFavorites();
+    updateFavoritesBadge();  
+   fetchServerCart().then(serverCart => {
+    console.log(serverCart)
+    if (serverCart != null) {
+        localStorage.setItem(CART_KEY, JSON.stringify(serverCart));
+    }
+    
+    updateCartBadge(); // just in case the server changed it
+     const cullFavorites = () => {
+        const favorites = JSON.parse(localStorage.getItem('favorites'))
+        console.log("function is beeingcallec")
+        const items = document.querySelectorAll(".product-card")
+        console.log(items)
+       for (let index = 0;index < items.length ;index++){
+        console.log(favorites[index])
+        console.log("isisterating")
+        if (!favorites.find(item => item.id == index+1)) {
+            items[index].remove();
+            console.log("triedremoving")
+        }
+            
+    
+    }
+
+
+
+
+
+
+
+
+
+     }
+    
+    cullFavorites()
+
+
+
+
+
+
+
+
+
+}).catch(err => {
+    console.error('Error fetching cart from server:', err);
+});
+
+
+
+
+
+
+
+
+
+
+});
+</script>
 </body>
+
 </php>
+
+
+
+

@@ -10,30 +10,12 @@
 </head>
 <body>
 
-    <header class="header">
-        <img src="tomaê.png" alt="TomaeLogo" class="logo" style="height: 130px; width: auto;" />
-        <div class="search-bar">
-            <input type="text" id="product-search" placeholder="Buscar bebidas, marcas...">
-            <i class="fas fa-search search-icon"></i>
-        </div>
-        <div class="nav-icons">
-            <a href="favoritos.php" class="icon-btn"><i class="fas fa-heart"></i><span class="badge" id="favorites-badge">0</span></a>
-            <button class="icon-btn"><i class="fas fa-bell"></i></button>
-            <a href="carrinho.php" class="icon-btn"><i class="fas fa-shopping-cart"></i><span class="badge" id="cart-badge">0</span></a>
-        </div>
-    </header>
+    <?php require_once("header.html")?>
 
     <div class="container">
     <?php
 // Example drink objects array
-$drinks = [
-    ["id" => 1, "name" => "Skol", "price" => 4.5, "category" => "Cerveja", "img" => "images/skol.jpg"],
-    ["id" => 2, "name" => "Heineken", "price" => 6.5, "category" => "Cerveja", "img" => "images/heineken.jpg"],
-    ["id" => 3, "name" => "Absolut", "price" => 49.0, "category" => "Vodka", "img" => "images/absolut.jpg"],
-    ["id" => 4, "name" => "Smirnoff", "price" => 29.0, "category" => "Vodka", "img" => "images/smirnoff.jpg"],
-    ["id" => 5, "name" => "Cerveja", "price" => 29.0, "category" => "Vodka", "img" => "images/smirnoff.jpg"],
-    // ... add more drinks
-];
+require_once("drink_list.php");
 
 // Group drinks by category
 $groupedDrinks = [];
@@ -126,7 +108,7 @@ foreach ($drinks as $drink) {
 
 
 <span id="cart-badge">0</span>
- <script src="datatransferutils.js"></script> 
+ 
 
 <script>
 document.addEventListener('DOMContentLoaded', () => {
@@ -140,12 +122,7 @@ document.addEventListener('DOMContentLoaded', () => {
    
 };
 
-    const updateCartBadge = () => {
-        const cart = getCart();
-        const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
-        const badge = document.getElementById('cart-badge');
-        if (badge) badge.textContent = totalItems;
-    };
+   
 
     const addToCart = (product) => {
         const cart = getCart();
@@ -164,6 +141,8 @@ document.addEventListener('DOMContentLoaded', () => {
     // Hook up all store page "Add to Cart" buttons
     document.querySelectorAll('.add-to-cart-btn').forEach(btn => {
         btn.addEventListener('click', () => {
+            
+            animateButton(btn)
             const card = btn.closest('.product-card');
             const product = {
                 id: card.dataset.id,
@@ -176,7 +155,64 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     
+
+
+     console.log("DOM fully loaded");
+
     
+
+    const toggleFavorite = (productCard, productId, productName, productPrice, productImg) => {
+        let favorites = JSON.parse(localStorage.getItem('favorites')) || [];
+        const favoriteIcon = productCard.querySelector('.favorite-btn i');
+        const isFavorited = favorites.some(item => item.id == productId);
+
+        if (isFavorited) {
+            favorites = favorites.filter(item => item.id != productId);
+            favoriteIcon.classList.remove('fas');
+            favoriteIcon.classList.add('far');
+        } else {
+            favorites.push({ id: productId, name: productName, price: productPrice, img: productImg });
+            favoriteIcon.classList.remove('far');
+            favoriteIcon.classList.add('fas');
+        }
+
+        localStorage.setItem('favorites', JSON.stringify(favorites));
+        updateFavoritesBadge();
+    };
+
+    const markInitialFavorites = () => {
+        let favorites = JSON.parse(localStorage.getItem('favorites')) || [];
+        document.querySelectorAll('.product-card').forEach(productCard => {
+            const productId = productCard.dataset.id;
+            const favoriteIcon = productCard.querySelector('.favorite-btn i');
+            if (favorites.some(item => item.id == productId)) {
+                favoriteIcon.classList.remove('far');
+                favoriteIcon.classList.add('fas');
+            } else {
+                favoriteIcon.classList.remove('fas');
+                favoriteIcon.classList.add('far');
+            }
+        });
+    };
+
+    // ✅ Properly hook favorite buttons
+    document.querySelectorAll('.favorite-btn').forEach(button => {
+        button.addEventListener('click', (event) => {
+            console.log("Favorite button clicked");
+
+            const productCard = event.target.closest('.product-card');
+            const productId = productCard.dataset.id;
+            const productName = productCard.dataset.name;
+            const productPrice = parseFloat(productCard.dataset.price);
+            const productImg = productCard.dataset.img;
+            animateButton(button)
+            toggleFavorite(productCard, productId, productName, productPrice, productImg);
+        });
+    });
+
+    // Initial favorite state
+    markInitialFavorites();
+    updateFavoritesBadge();  
    fetchServerCart().then(serverCart => {
     console.log(serverCart)
     if (serverCart != null) {
@@ -188,7 +224,10 @@ document.addEventListener('DOMContentLoaded', () => {
     console.error('Error fetching cart from server:', err);
 });
 
-
+const animateButton = (btn) => {
+    btn.classList.add('jump');
+    setTimeout(() => btn.classList.remove('jump'), 300); // Remove after animation finishes
+};
 });
 </script>
 
@@ -199,24 +238,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
     </div> 
-    <nav class="footer-nav">
-        <a href="index.php" class="nav-item active">
-            <i class="fas fa-home"></i>
-            <span>Início</span>
-        </a>
-        <a href="carrinho.php" class="nav-item">
-            <i class="fas fa-shopping-cart"></i>
-            <span>Carrinho</span>
-        </a>
-        <a href="favoritos.php" class="nav-item">
-            <i class="fas fa-heart"></i>
-            <span>Favoritos</span>
-        </a>
-        <a href="admin_login.php" class="nav-item">
-            <i class="fas fa-user"></i>
-            <span>Admin</span>
-        </a>
-    </nav>
+    <?php require_once("footer.html")?>
 
      
 </body>

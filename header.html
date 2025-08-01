@@ -1,0 +1,46 @@
+<header class="header">
+    <img src="tomaê.png" alt="TomaeLogo" class="logo" style="height: 130px; width: auto;" />
+    <div class="search-bar">
+        <input type="text" placeholder="Buscar bebidas, marcas..." />
+        <i class="fas fa-search search-icon"></i>
+    </div>
+    <div class="nav-icons">
+        <a href="favoritos.php" class="icon-btn">
+            <i class="fas fa-heart"></i>
+            <span class="badge" id="favorites-badge">0</span>
+        </a>
+        <button class="icon-btn">
+            <i class="fas fa-bell"></i>
+        </button>
+        <a href="carrinho.php" class="icon-btn">
+            <i class="fas fa-shopping-cart"></i>
+            <span class="badge" id="cart-badge">0</span>
+        </a>
+    </div>
+
+</header>
+<script src="data_transfer_utils.js"></script> 
+
+
+
+<script>
+const updateFavoritesBadge = () => {
+        let favorites = JSON.parse(localStorage.getItem('favorites')) || [];
+        const favoritesBadge = document.getElementById('favorites-badge');
+        if (favoritesBadge) {
+            favoritesBadge.textContent = favorites.length;
+        }
+    };
+
+
+     const updateCartBadge = () => {
+        const cart = getCart();
+        const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
+        const badge = document.getElementById('cart-badge');
+        if (badge) badge.textContent = totalItems;
+    };
+
+updateCartBadge()
+updateCartBadge()
+
+</script>

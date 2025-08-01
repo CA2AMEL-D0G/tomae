@@ -247,10 +247,7 @@ body {
     background-color: #A00000; /* Tom mais escuro do vermelho ao hover */
     transform: translateY(-2px);
 }
-.add-to-cart-btn:active {
-    animation: jump 0.3s ease;
-    background-color: var(--secondary-color);
-    }
+
 .favorite-btn {
     position: absolute;
     top: 10px;
@@ -899,11 +896,13 @@ body {
 
 @keyframes jump {
     0%   { transform: scale(1); }
-    30%  { transform: scale(110) translateY(-5px); }
-    60%  { transform: scale(10) translateY(2px); }
+    30%  { transform: scale(1.1) translateY(-5px); }
+    60%  { transform: scale(1) translateY(2px); }
     100% { transform: scale(1); }
 }
 
 .jump {
     animation: jump 0.3s ease;
 }
+
+
