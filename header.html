@@ -8,10 +8,10 @@
         <a href="favoritos.php" class="icon-btn">
             <i class="fas fa-heart"></i>
             <span class="badge" id="favorites-badge">0</span>
-        </a>
+       <!-- </a>
         <button class="icon-btn">
             <i class="fas fa-bell"></i>
-        </button>
+        </button>--->
         <a href="carrinho.php" class="icon-btn">
             <i class="fas fa-shopping-cart"></i>
             <span class="badge" id="cart-badge">0</span>
@@ -39,8 +39,27 @@ const updateFavoritesBadge = () => {
         const badge = document.getElementById('cart-badge');
         if (badge) badge.textContent = totalItems;
     };
+const setupLiveSearch = () => {
+    const searchInput = document.querySelector('.search-bar input');
 
-updateCartBadge()
+    if (!searchInput) return;
+
+    searchInput.addEventListener('input', () => {
+        const searchTerm = searchInput.value.trim().toLowerCase();
+        const productCards = document.querySelectorAll('.product-card, .cart-card');
+
+        productCards.forEach(card => {
+            const productName = card.dataset.name?.toLowerCase() || '';
+            const matches = productName.includes(searchTerm);
+            card.style.display = matches ? '' : 'none';
+        });
+    });
+};
+
+setupLiveSearch();
+
+
+updateFavoritesBadge()
 updateCartBadge()
 
 </script>

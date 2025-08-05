@@ -22,6 +22,50 @@ require_once("drink_list.php")
             width: 100%;
             
         }
+
+            <style>
+        .category-section {
+            margin-bottom: 30px;
+        }
+
+        .category-title {
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin-left: 10px;
+        }
+
+        .product-grid {
+            display: flex;
+            overflow-x: auto;
+            padding: 10px;
+            gap: 10px;
+        }
+
+        .product-card {
+            min-width: 160px;
+            padding: 10px;
+            background: #fff;
+            border-radius: 8px;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+            flex-shrink: 0;
+        }
+
+
+
+        .product-info {
+            text-align: center;
+            margin-top: 5px;
+        }
+        
+        .price {
+            font-weight: bold;
+        }
+        
+        .drink-image {
+    width: 200px;
+    height: 200px;
+    
+}
 </style>
 
 
@@ -39,34 +83,42 @@ require_once("drink_list.php")
         <h2 class="section-title">Meus Favoritos</h2>
 
         <div class="favorite-grid" id="favorites-list">
-             
+       
         
-                    <?php foreach ($drinks as $drink): ?>
+                    <?php foreach ($drinks as $drink): 
+                        
+                     
+                        ?>
+                        
+                           
                         <div class="product-card" 
-                             data-id="<?= $drink['id'] ?>"
-                             data-name="<?= htmlspecialchars($drink['name']) ?>"
-                             data-price="<?= $drink['price'] ?>"
-                             data-img="<?= htmlspecialchars($drink['img']) ?>">
-                             
-                            <button class="favorite-btn"><i class="far fa-heart"></i></button>
-                            <img src="<?= htmlspecialchars($drink['img']) ?>" alt="<?= htmlspecialchars($drink['name']) ?>">
-                            <div class="product-info">
-                                <h3><?= htmlspecialchars($drink['name']) ?></h3>
+                                data-id="<?= $drink['id'] ?>"
+                                data-name="<?= htmlspecialchars($drink['name']) ?>"
+                                data-price="<?= $drink['price'] ?>"
+                                data-img="<?= htmlspecialchars($drink['img']) ?>">
                                 
-                                <span class="price">R$ <?= number_format($drink['price'], 2, ',', '.') ?></span>
+                                <button class="favorite-btn"><i class="far fa-heart"></i></button>
+                                
+                                <div class="product-info">
+                                <h3><?= htmlspecialchars($drink['name']) ?></h3>
+                                   <img class="drink-image" src="<?= htmlspecialchars($drink['img']) ?>"> 
+                                <span class="price">R$ <?= number_format($drink['price']*0.01, 2, ',', '.') ?></span>
+                                </div>
+                                <button onclick="" class="add-to-cart-btn">Adicionar</button>
                             </div>
-                            <button onclick="" class="add-to-cart-btn">Adicionar ao carrinho</button>
-                        </div>
+                            
+                        
                     <?php endforeach; ?>
-        
+
+    
           
 
 
 
-            <p id="empty-favorites-message" style="text-align: center; color: var(--text-color);">Você ainda não tem produtos favoritos.</p>
+            
         </div>
     </div>
-
+    <p id="empty-favorites-message" style="text-align: center; color: var(--text-color);">Você ainda não tem produtos favoritos.</p>
    <?php require_once("footer.html")?>
 
     
@@ -185,7 +237,12 @@ function animateButton(btn) {
     
     updateCartBadge(); // just in case the server changed it
      const cullFavorites = () => {
-        const favorites = JSON.parse(localStorage.getItem('favorites'))
+        let favorites;
+        try {
+            favorites = JSON.parse(localStorage.getItem('favorites')) || [];
+        } catch (e) {
+        favorites = [];
+        }
         console.log("function is beeingcallec")
         const items = document.querySelectorAll(".product-card")
         console.log(items)
@@ -194,14 +251,14 @@ function animateButton(btn) {
         console.log("isisterating")
         if (!favorites.find(item => item.id == index+1)) {
             items[index].remove();
-            console.log("triedremoving")
+            
         }
             
     
     }
+        if (favorites.length != 0){
 
-
-
+        document.getElementById("empty-favorites-message").remove()}
 
 
 
@@ -214,7 +271,7 @@ function animateButton(btn) {
 
 
 
-
+const item = document
 
 
 

@@ -1,7 +1,11 @@
 
 
 
+<?php  
 
+
+
+?>
 
 <!DOCTYPE html>
 <html lang="pt-BR">
@@ -14,21 +18,21 @@
     <link rel="stylesheet" href="style.css"> 
 </head>
 <body>
-
+    
     <div class="admin-login-page">
         <div class="login-card">
             <h2>Login Administrador</h2>
-            <form>
-                <div class="form-group">
-                    <label for="admin-email">E-mail</label>
-                    <input type="email" id="admin-email" name="email" required>
-                </div>
-                <div class="form-group">
-                    <label for="admin-password">Senha</label>
-                    <input type="password" id="admin-password" name="password" required>
-                </div>
-                <button type="submit" class="login-btn">Entrar</button>
-            </form>
+            <form action="admin_painel.php" method="POST">
+                 <div class="form-group">
+                 <label for="admin-email">E-mail</label>
+                  <input type="text" id="user" name="user" required>
+                 </div>
+                         <div class="form-group">
+                     <label for="admin-password">Senha</label>
+                   <input type="password" id="senha" name="senha" required>
+    </div>
+    <button type="submit" class="login-btn">Entrar</button>
+</form>
         </div>
     </div>
 

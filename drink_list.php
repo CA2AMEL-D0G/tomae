@@ -1,12 +1,27 @@
 <?php
+require_once("src/database/database.php");
 
-//TODO add drinks from database dynamically
+// Fetch categories: [id => name]
+$categories = [];
+$catResult = mysqli_query($connection, "SELECT id_categoria, nome_categoria FROM categoria");
+while ($row = mysqli_fetch_assoc($catResult)) {
+    $categories[$row["id_categoria"]] = $row["nome_categoria"];
+}
 
-$drinks = [
-    ["id" => 1, "name" => "Skol", "price" => 4.5, "category" => "Cerveja", "img" => "images/skol.jpg"],
-    ["id" => 2, "name" => "Heineken", "price" => 6.5, "category" => "Cerveja", "img" => "images/heineken.jpg"],
-    ["id" => 3, "name" => "Absolut", "price" => 49.0, "category" => "Vodka", "img" => "images/absolut.jpg"],
-    ["id" => 4, "name" => "Smirnoff", "price" => 29.0, "category" => "Vodka", "img" => "images/smirnoff.jpg"],
-    ["id" => 5, "name" => "Cerveja", "price" => 29.0, "category" => "Vodka", "img" => "images/smirnoff.jpg"],
-    
-];
+// Fetch drinks
+$drinks = [];
+$drinkResult = mysqli_query($connection, "SELECT id_bebida, nome_bebida, preco, estoque, metadados, fk_categoria_id_categoria, caminho_foto FROM bebida");
+
+while ($row = mysqli_fetch_assoc($drinkResult)) {
+    $drinks[] = [
+        "id" => (int)$row["id_bebida"],
+        "name" => $row["nome_bebida"],
+        "price" => (int)round($row['preco'] * 100),
+        "stock" => (int)$row["estoque"],
+        "category" => $row["fk_categoria_id_categoria"], // category ID
+        "metadata" => $row["metadados"], // assuming it's a JSON string or similar
+        "img" => "imagems/" . $row["caminho_foto"]
+    ];
+}
+
+?>

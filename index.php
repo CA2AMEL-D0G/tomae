@@ -18,13 +18,10 @@
 require_once("drink_list.php");
 
 // Group drinks by category
-$groupedDrinks = [];
-foreach ($drinks as $drink) {
-    $groupedDrinks[$drink['category']][] = $drink;
-}
+
+
 ?>
-<!DOCTYPE html>
-<html lang="pt-BR">
+
 <head>
     <meta charset="UTF-8">
     <title>Tomaê - Início</title>
@@ -56,20 +53,23 @@ foreach ($drinks as $drink) {
             flex-shrink: 0;
         }
 
-        .product-card img {
-            width: 100%;
-            height: auto;
-            border-radius: 4px;
-        }
+
 
         .product-info {
             text-align: center;
             margin-top: 5px;
         }
-
+        
         .price {
             font-weight: bold;
         }
+        
+        .drink-image {
+    width: 200px;
+    height: 200px;
+    
+}
+    
     </style>
 </head>
 <body>
@@ -79,26 +79,33 @@ foreach ($drinks as $drink) {
     </header>
 
     <main>
-        <?php foreach ($groupedDrinks as $category => $drinksList): ?>
+        <?php foreach ($categories as $id => $categoryName): ?>
             <section class="category-section">
-                <h2 class="category-title"><?= htmlspecialchars($category) ?></h2>
+                <h2 class="category-title"><?= htmlspecialchars($categoryName) ?></h2>
                 <div class="product-grid">
-                    <?php foreach ($drinksList as $drink): ?>
+                    <?php foreach ($drinks as $drink): 
+                        
+                        if($drink["category"]==$id):
+                        ?>
+                        
+                           
                         <div class="product-card" 
-                             data-id="<?= $drink['id'] ?>"
-                             data-name="<?= htmlspecialchars($drink['name']) ?>"
-                             data-price="<?= $drink['price'] ?>"
-                             data-img="<?= htmlspecialchars($drink['img']) ?>">
-                             
-                            <button class="favorite-btn"><i class="far fa-heart"></i></button>
-                            <img src="<?= htmlspecialchars($drink['img']) ?>" alt="<?= htmlspecialchars($drink['name']) ?>">
-                            <div class="product-info">
+                                data-id="<?= $drink['id'] ?>"
+                                data-name="<?= htmlspecialchars($drink['name']) ?>"
+                                data-price="<?= $drink['price'] ?>"
+                                data-img="<?= htmlspecialchars($drink['img']) ?>">
+                                
+                                <button class="favorite-btn"><i class="far fa-heart"></i></button>
+                                
+                                <div class="product-info">
                                 <h3><?= htmlspecialchars($drink['name']) ?></h3>
-                                <p><?= strpos($drink['name'], 'Cerveja') !== false ? 'Long Neck 330ml' : '' ?></p>
-                                <span class="price">R$ <?= number_format($drink['price'], 2, ',', '.') ?></span>
+                                   <img class="drink-image" src="<?= htmlspecialchars($drink['img']) ?>"> 
+                                <span class="price">R$ <?= number_format($drink['price']*0.01, 2, ',', '.') ?></span>
+                                </div>
+                                <button onclick="" class="add-to-cart-btn">Adicionar</button>
                             </div>
-                            <button onclick="" class="add-to-cart-btn">Adicionar</button>
-                        </div>
+                            
+                        <?php endif?>
                     <?php endforeach; ?>
                 </div>
             </section>
@@ -107,7 +114,7 @@ foreach ($drinks as $drink) {
 
 
 
-<span id="cart-badge">0</span>
+
  
 
 <script>
@@ -146,8 +153,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const card = btn.closest('.product-card');
             const product = {
                 id: card.dataset.id,
-                name: card.dataset.name,
-                price: parseFloat(card.dataset.price),
+                
                 
             };
             addToCart(product);
@@ -217,7 +223,10 @@ document.addEventListener('DOMContentLoaded', () => {
     console.log(serverCart)
     if (serverCart != null) {
         localStorage.setItem(CART_KEY, JSON.stringify(serverCart));
+    }else{
+        sendCartToServer(getCart())
     }
+    
     
     updateCartBadge(); // just in case the server changed it
 }).catch(err => {
