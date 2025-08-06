@@ -236,7 +236,7 @@ button:hover {
   height: 100vh;           /* Full viewport height */
 }
 .page-container {
-  padding: 0 6rem; /* or whatever space you want */
+  padding: 0 20rem; /* or whatever space you want */
   box-sizing: border-box;
 }
 
@@ -310,7 +310,7 @@ while ($row = mysqli_fetch_assoc($result)) {
 // 3. Output categories list
 echo "<h2>Categorias</h2> <button onclick= 'criatecategory()'>nova categoria</button><ul>";
 foreach ($categories as $id => $name) {
-   echo "<li>" . htmlspecialchars($name) . " <button onclick='deletecategory(\"" . $id . "\")'>excluir</button> <button onclick='editcategory(\"" . $id . "\")'>editar</button>";
+   echo "<li>" . htmlspecialchars($name) . " <button onclick='deletecategory(\"" . $id . "\")'>excluir</button> <button class='edit-btn' onclick='editcategory(\"" . $id . "\")'>editar</button>";
 }
 
 echo "</ul>";
@@ -375,7 +375,7 @@ if (!empty($drinks[0])) {
         ?>
     </select><br><br>
    
-    <button type="submit">Adicionar Bebida</button>   <button type="button" id="cancelEditBtn" style="display: none; margin-left: 0.5rem;">Cancelar</button>
+    <button type="submit">Adicionar Bebida</button>   <button style="background-color: red; color: white; " type="button" id="cancelEditBtn" style="display: none; margin-left: 0.5rem;">Cancelar</button>
 </form>
     </div>
 
@@ -392,9 +392,11 @@ if (!empty($drinks[0])) {
 
 
 function deleteDrink(id) {
-    console.log("Deletando bebida com ID:", id);
-    // TODO: implement delete logic
-}
+      if (confirm("Tem certeza que deseja excluir esta bebida? Esta ação não pode ser desfeita.")) {
+        window.location.href = "excluir_bebida.php?id=" + encodeURIComponent(id) ;
+    }
+     
+    }
 function criatecategory(){
       const nome = prompt("Digite o nome da nova categoria:");
     
@@ -410,8 +412,10 @@ function criatecategory(){
 function deletecategory(id){
       
 
+    if (confirm("Tem certeza que deseja excluir esta categoria? Esta ação não pode ser desfeita.")) {
+       window.location.href = `excluir_categoria.php?id=${id}`;
+    }
     
-    window.location.href = `excluir_categoria.php?id=${id}`;
 }
 
 function editcategory(id) {

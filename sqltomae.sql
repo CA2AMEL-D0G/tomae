@@ -1,4 +1,4 @@
-/* tomaelogico: */
+/* tomae base de dados: */
 
 CREATE TABLE bebida (
     id_bebida INTEGER PRIMARY KEY AUTO_INCREMENT,
