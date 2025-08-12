@@ -12,9 +12,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         http_response_code(400);
         echo json_encode(['status' => 'error', 'message' => 'Invalid cart data']);
     }
-} elseif ($_SERVER['REQUEST_METHOD'] === 'GET') {
-    $cart = isset($_SESSION['cart']) ? $_SESSION['cart'] : [];
-    echo json_encode($cart);
 } else {
     http_response_code(405); // Method Not Allowed
     echo json_encode(['status' => 'error', 'message' => 'Method not allowed']);
